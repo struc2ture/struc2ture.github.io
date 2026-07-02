@@ -1,9 +1,9 @@
 # Writeups
 
-[Mnemosyne. Relocatable Memory. Relative Pointers.](0701_MNEMOSYINE.md)
+[Mnemosyne. Relocatable Memory. Relative Pointers.](0701_mnemosyne_writeup.md)
 
 # Projects
 
-[Mnemosyne]()
+[Mnemosyne](https://github.com/struc2ture/mnemosyne)
 
-[edi2tor]()
+[edi2tor](https://github.com/struc2ture/edi2tor)
