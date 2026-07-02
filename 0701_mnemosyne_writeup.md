@@ -1,6 +1,8 @@
+# Mnemosyne. Relocatable Memory. Relative Pointers. Malloc.
+
 There are two parts to this story: a prologue and an epilogue. One, an experiment with relocatable memory. Two, a learning project to implement my own malloc. The result is an experimental library, Mnemosyne.
 
-# One. Relocatable Memory & Relative Pointers
+## One. Relocatable Memory & Relative Pointers
 
 When working on games I've often questioned why it's so complicated to implement even the simplest version of save files. Immediately you need to bring in complex serialization libraries or hand roll your own reflection to traverse the state and preserve only the data that needs to be saved to disk. Then there's versioning. Of course you will need these things for a mature project. But why do you have to bear this complexity upfront, even in the early stages, when it's most important for the codebase to not limit experimentation and exploration?
 
@@ -30,7 +32,7 @@ struct StatePtr
 {
     RelPtr<T> rel_ptr;
     
-	T *operator->()
+    T *operator->()
     {
         return rel_ptr.get_ptr(_arena_mem);
     }
@@ -44,28 +46,28 @@ This allowed for usage like this:
 ```c++
 struct State
 {
-	StatePtr<float> some_numbers;
+    StatePtr<float> some_numbers;
 }
 
 void app_update(void *mem)
 {
-	bool is_initialized;
-	state_arena_attach(mem, &is_initialized);
-	StatePtr<State> state = state_arena_get_state_ptr();
-	
-	if (!is_initialized)
-	{
-		state->some_numbers = state_arena_push<float>(10);
-		for (int i = 0; i < 10; i++)
-		{
-			state->some_numbers[i] = rand_float();
-		} 
-	}
-	
-	for (int i = 0; i < 10; i++)
-	{
-		draw_string("%d: %f\n", i, state->some_numbers[i]);
-	}
+    bool is_initialized;
+    state_arena_attach(mem, &is_initialized);
+    StatePtr<State> state = state_arena_get_state_ptr();
+    
+    if (!is_initialized)
+    {
+        state->some_numbers = state_arena_push<float>(10);
+        for (int i = 0; i < 10; i++)
+        {
+            state->some_numbers[i] = rand_float();
+        } 
+    }
+    
+    for (int i = 0; i < 10; i++)
+    {
+        draw_string("%d: %f\n", i, state->some_numbers[i]);
+    }
 }
 ```
 
@@ -76,27 +78,27 @@ Thinking of the notion of the root struct further, I came to the realization tha
 ```c++
 struct State
 {
-	RPtr<State, float> some_numbers;
+    RPtr<State, float> some_numbers;
 }
 
 void app_update(void *mem)
 {
-	bool is_initialized;
-	State &state = arena_attach<State>(mem, &is_initialized);
-	
-	if (!is_initialized)
-	{
-		state.some_numbers = arena_alloc<State, float>(10);
-		for (int i = 0; i < 10; i++)
-		{
-			state.some_numbers[i] = rand_float();
-		} 
-	}
-	
-	for (int i = 0; i < 10; i++)
-	{
-		draw_string("%d: %f\n", i, state->some_numbers[i]);
-	}
+    bool is_initialized;
+    State &state = arena_attach<State>(mem, &is_initialized);
+    
+    if (!is_initialized)
+    {
+        state.some_numbers = arena_alloc<State, float>(10);
+        for (int i = 0; i < 10; i++)
+        {
+            state.some_numbers[i] = rand_float();
+        } 
+    }
+    
+    for (int i = 0; i < 10; i++)
+    {
+        draw_string("%d: %f\n", i, state->some_numbers[i]);
+    }
 }
 ```
 
@@ -155,7 +157,7 @@ As far as alignment goes, for now my solution is simple: just align all the allo
 
 There are a lot of improvements that can be done to this allocation schema, the most fundamental of which is classifying allocations by size and dealing with each size accordingly. For example, for small allocations, include multiple size-classes, round up each allocation to its size-class and store each size-class sequentially. That way, you can find a block with pointer arithmetic, without O(n) list traversal. For large allocations, you can use pages, a multiple of which is used for an allocation. A great resource for a more advanced allocator design is [this TCMalloc overview](https://goog-perftools.sourceforge.net/doc/tcmalloc.html).
 
-# Mnemosyne
+## Mnemosyne
 
 The result of my experiments is this experimental library, [Mnemosyne]([https://github.com/struc2ture/mnemosyne](https://github.com/struc2ture/mnemosyne). Check it out! (But don't use it in a real project!) There's more explanation about the API and the implementation in the repo's readme, and of course the source code is available, but here's a sample of what using that library looks like:
 
@@ -167,13 +169,13 @@ void module_run_one(void *mem)
     bool is_initialized;
     State &state = mne_attach_mem_owning<State>(mem, is_initialized);
 
-	if (!is_initialized)
-	{
-	    state.numbers = mne_alloc<State, int>(10);
-	    mne_free(state.numbers);
-	    state.numbers = mne_alloc<State, int>(20);
-	    for (int i = 0; i < 20; i++) { state.numbers[i] = i + 1; }
-	}
+    if (!is_initialized)
+    {
+        state.numbers = mne_alloc<State, int>(10);
+        mne_free(state.numbers);
+        state.numbers = mne_alloc<State, int>(20);
+        for (int i = 0; i < 20; i++) { state.numbers[i] = i + 1; }
+    }
 }
 
 void module_run_two(void *mem)
@@ -181,9 +183,9 @@ void module_run_two(void *mem)
     bool attahed = mne_attach_mem_non_owning<State>(new_mem);
     if (attached)
     {
-	    State &state = mne_get_root_struct<State>();
-	    draw_numbers(state.numbers, 20);
-	}
+        State &state = mne_get_root_struct<State>();
+        draw_numbers(state.numbers, 20);
+    }
 }
 
 int main()
