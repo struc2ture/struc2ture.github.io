@@ -2,6 +2,8 @@
 title: Mnemosyne. Relocatable Memory. Relative Pointers. Malloc.
 ---
 
+_July 1, 2026_
+
 There are two parts to this story: a prologue and an epilogue. One, an experiment with relocatable memory. Two, a learning project to implement my own malloc. The result is an experimental library, Mnemosyne.
 
 ## One. Relocatable Memory & Relative Pointers
@@ -115,7 +117,8 @@ All meta data for an arena and its allocations are in-place in the same blob of 
 The most interesting thing about dealing with memory in such a way is that we can treat the persistent state of an application as always already being "offline". If you map the memory block used by the arena to a file, you can close the program and then restart it right where it left off - quite literally, not through serialization-deserialization steps that run behind the scenes.
 
 Another thing that this opens up is that we can run multiple programs operating on the exact same state, even in parallel, given they access it in a synchronized way. This is grounds for a whole other set of experiments that I will discuss in future writeups.
-# Two. Writing My Own Malloc
+
+## Two. Writing My Own Malloc
 
 In many projects of mine, I find stack-based allocation more than sufficient: whenever you need more memory, just push it onto the arena. You cannot deallocate, you can only discard the whole arena. Memory reuse can be implemented as a feature on a higher level (as in not as a feature of the allocator), e.g. using free lists. Dynamically expanding lists can be implemented with a linked list of buckets.
 
@@ -161,7 +164,7 @@ There are a lot of improvements that can be done to this allocation schema, the 
 
 ## Mnemosyne
 
-The result of my experiments is this experimental library, [Mnemosyne]([https://github.com/struc2ture/mnemosyne](https://github.com/struc2ture/mnemosyne). Check it out! (But don't use it in a real project!) There's more explanation about the API and the implementation in the repo's readme, and of course the source code is available, but here's a sample of what using that library looks like:
+The result of my experiments is this experimental library, [Mnemosyne](https://github.com/struc2ture/mnemosyne). Check it out! (But don't use it in a real project!) There's more explanation about the API and the implementation in the repo's readme, and of course the source code is available, but here's a sample of what using that library looks like:
 
 ```c++
 #include "mnemosyne.h"
