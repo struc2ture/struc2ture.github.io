@@ -1,10 +1,7 @@
 ---
 layout: page
-name: Mnemosyne. Relocatable Memory & Writing a Malloc.
-title: struc_ture
+title: Mnemosyne. Relocatable Memory & Writing a Malloc.
 ---
-
-# Mnemosyne. Relocatable Memory & Writing a Malloc.
 
 _July 1, 2026_
 
