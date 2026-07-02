@@ -1,5 +1,5 @@
 ---
-layout: minimal
+layout: page
 ---
 
 # Mnemosyne. Relocatable Memory & Writing a Malloc.
