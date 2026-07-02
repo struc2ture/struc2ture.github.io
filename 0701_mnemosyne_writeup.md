@@ -1,5 +1,7 @@
 ---
 layout: page
+name: Mnemosyne. Relocatable Memory & Writing a Malloc.
+title: null
 ---
 
 # Mnemosyne. Relocatable Memory & Writing a Malloc.
