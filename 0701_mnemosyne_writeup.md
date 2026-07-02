@@ -1,4 +1,6 @@
-# Mnemosyne. Relocatable Memory. Relative Pointers. Malloc.
+---
+title: Mnemosyne. Relocatable Memory. Relative Pointers. Malloc.
+---
 
 There are two parts to this story: a prologue and an epilogue. One, an experiment with relocatable memory. Two, a learning project to implement my own malloc. The result is an experimental library, Mnemosyne.
 
