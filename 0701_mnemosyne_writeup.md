@@ -1,7 +1,8 @@
 ---
-title: Mnemosyne. Relocatable Memory. Relative Pointers. Malloc.
 layout: minimal
 ---
+
+# Mnemosyne. Relocatable Memory. Relative Pointers. Malloc.
 
 _July 1, 2026_
 
