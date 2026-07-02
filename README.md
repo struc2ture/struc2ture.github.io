@@ -1,8 +1,10 @@
-# Writeups
+# struc_ture
+
+## Writeups
 
 [Mnemosyne. Relocatable Memory. Relative Pointers.](0701_mnemosyne_writeup.md)
 
-# Projects
+## Projects
 
 [Mnemosyne](https://github.com/struc2ture/mnemosyne)
 
