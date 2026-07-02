@@ -4,7 +4,7 @@ title: struc_ture
 
 ## Writeups
 
-[Mnemosyne. Relocatable Memory. Relative Pointers.](0701_mnemosyne_writeup.md)
+[Mnemosyne. Relocatable Memory & Writing a Malloc.](0701_mnemosyne_writeup.md)
 
 ## Projects
 
