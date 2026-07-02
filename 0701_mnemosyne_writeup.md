@@ -1,5 +1,6 @@
 ---
 title: Mnemosyne. Relocatable Memory. Relative Pointers. Malloc.
+layout: minimal
 ---
 
 _July 1, 2026_
