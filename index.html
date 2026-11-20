@@ -3,21 +3,122 @@
   <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>STRUCTURED.CITY</title>
+    
+    <style>
+      @font-face {
+        font-family: "LM";
+        src: url("res/AlteHaasGroteskBold.ttf") format("truetype");
+        font-style: normal;
+        font-weight: 900;
+      }
+
+      @font-face {
+        font-family: "JRK";
+        src: url("res/noddef_jrk_tb.otf") format("opentype");
+        font-style: normal;
+        font-weight: 900;
+      }
+
+      * {
+        margin: 0px;
+      }
+
+      :root {
+        --fadein-timing: 2s ease-out;
+      }
+
+      .bg {
+        background-image: url("res/bg-surface.jpg");
+        background-size: cover;
+        background-position: center;
+        width: 100%;
+        height: 100vh;
+        position: fixed;
+        z-index: -1;
+      }
+
+      .bg-tint {
+        width: 100%;
+        height: 100%;
+        animation: fadeInColor var(--fadein-timing);
+        animation-fill-mode: both;
+      }
+
+      h1 {
+        --fsize: 10.7vw;
+        position: fixed;
+        font-size: var(--fsize);
+        font-family: "LM", sans-serif;
+        color: #ff7878;
+        font-style: normal;
+        font-weight: 900;
+        mix-blend-mode: color-dodge;
+        margin-left: calc(-0.1 * var(--fsize));
+        margin-top: calc(-0.3 * var(--fsize));
+        animation: fadeIn var(--fadein-timing);
+      }
+
+      p {
+        color: rgb(200 200 150 / 50%);
+        font-family: "JRK", sans-serif;
+        position: fixed;
+        font-size: 10vw;
+        font-weight: 700;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -50%);
+        transform-origin: center;
+        animation: spinConstr 5s linear, fadeIn var(--fadein-timing);
+        animation-iteration-count: infinite, 1;
+      }
+
+      @keyframes spinConstr {
+        0% {
+          transform: translate(-50%, -50%) rotateX(0deg) rotateY(0deg);
+        }
+        100% {
+          transform: translate(-50%, -50%) rotateX(720deg) rotateY(360deg);
+        }
+      }
+
+      @keyframes fadeIn {
+        0% {
+          opacity: 0;
+        }
+        100% {
+          opacity: 1;
+        }
+      }
+
+      @keyframes fadeInColor {
+        0% {
+          background-color: rgb(0 0 0 / 0%);
+        }
+        100% {
+          background-color: rgb(0 0 0 / 60%);
+        }
+      }
+
+      @media(width < 450px) {
+        h1 {
+          --fsize: 10.7vh;
+          margin-top: 0px;
+          margin-left: 0px;
+          left: calc(0.94 * var(--fsize));
+          bottom: calc(-0.1 * var(--fsize));
+          transform-origin: bottom left;
+          transform: rotate(-90deg);
+        }
+      }
+    </style>
   </head>
   <body>
-    <h1>Hello world!</h1>
-    <canvas width=300 height=300>My Canvas</canvas>
-    <script>
-      const canvas = document.currentScript.previousElementSibling;
-      const ctx = canvas.getContext("2d");
-
-      ctx.fillStyle = "rgb(255, 245, 240)";
-      ctx.fillRect(0, 0, canvas.clientWidth, canvas.clientHeight);
-
-      ctx.fillStyle = "rgb(50, 20, 20)";
-      ctx.beginPath();
-      ctx.arc(canvas.clientWidth * 0.5, canvas.clientHeight * 0.5, canvas.clientWidth * 0.3, 0, Math.PI * 2);
-      ctx.fill();
-    </script>
+    <div class="bg">
+      <div class="bg-tint">
+        <h1>STRUCTURED.CITY</h1>
+        <p>UNDER CONSTRUCTION</h1>
+      </div>
+    </div>
   </body>
 </html>
